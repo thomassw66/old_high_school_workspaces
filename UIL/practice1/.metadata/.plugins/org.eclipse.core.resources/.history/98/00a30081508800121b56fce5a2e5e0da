@@ -1,0 +1,23 @@
+import java.awt.Toolkit;
+import java.util.Scanner;
+public class IntevervalTime {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int n = in.nextInt();
+		for(int i = 1; i <= n; i ++){
+
+			try {
+				Thread.sleep(40000);
+			} catch (InterruptedException e) {
+				i--;
+				e.printStackTrace();
+			}
+			Toolkit.getDefaultToolkit().beep();
+		}
+		while(true){
+			Toolkit.getDefaultToolkit().beep();
+		}
+	}
+
+}

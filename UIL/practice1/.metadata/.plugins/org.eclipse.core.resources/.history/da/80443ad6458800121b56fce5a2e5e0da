@@ -1,0 +1,19 @@
+
+public class IntevervalTime {
+
+	public static void main(String[] args) {
+
+		System.out.println("-----------------Start" +
+				"_________________");
+		while(true){
+			try {
+				Thread.sleep(40000);
+				System.out.println("_____________________DONE________________________");
+			} catch (InterruptedException e) {
+				System.err.print("AHHH\n");
+			}
+		}
+
+	}
+
+}

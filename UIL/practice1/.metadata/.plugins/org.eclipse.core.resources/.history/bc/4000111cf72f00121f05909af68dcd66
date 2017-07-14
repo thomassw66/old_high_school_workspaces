@@ -1,0 +1,42 @@
+
+public class Soundex {
+
+	public static void main(String[] args) {
+		System.out.println(getSoundexCode('C'));
+	}
+	String generateSoundex(String name){
+		return "";
+	}
+	static int getSoundexCode(char c){
+		switch(c){
+		case 'B':
+		case 'P':
+		case 'F':
+		case 'V':
+			return 1;
+		case 'C':
+		case 'S':
+		case 'K':
+		case 'G':
+		case 'J':
+		case 'Q':
+		case 'X':
+		case 'Z':
+			return 2;
+		case 'D':
+		case 'T':
+			return 3;
+		case 'L':
+			return 4;
+		case 'M':
+		case 'N':
+			return 5;
+		case 'R':
+			return 6;
+			
+		//negative one if its a vowel and not encoded
+		default:
+			return -1;
+		}
+	}
+}

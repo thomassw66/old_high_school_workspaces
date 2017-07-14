@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+
+public class InterLocked {
+
+	public static void main(String[] args) {System.out.println(2 % 4);
+		Scanner in = new Scanner (System.in);
+		int n = in.nextInt();
+		for(int i = 0; i < n; i++){
+			String a = in.next(), b = in.next(), c = in.next();
+			if(interlocked(a,c) && interlocked(b,c)){
+				System.out.println("YES");
+			}else {
+
+				System.out.println("NO");
+			}
+		}
+	}
+	static boolean interlocked(String a, String b){
+		int x = 0;
+		for(int i = 0; i < a.length(); i ++){
+			int ind = b.indexOf(a.charAt(i), x);
+			if(ind == -1)return false;
+			else x = ind;
+		}
+		return true;
+	}
+}

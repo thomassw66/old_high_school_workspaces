@@ -1,0 +1,53 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+/* * test case
+4
+5
+2 1 4
+2 3 3
+1 3 -2
+3 4 2
+4 2 -1
+ */
+public class FloydWorshall {
+	public static int [][] distance;
+	public static void main(String [] asdf){
+		Scanner input = new Scanner (System.in);
+		int a = input.nextInt();
+		initDstance(a);
+		int cons = input.nextInt();
+		for(int i = 0; i < cons; i++){
+			int from = input.nextInt()-1;
+			int to = input.nextInt()-1;
+			int dist = input.nextInt();
+			distance[from][to] = dist;
+		}
+		print(distance);
+		for(int h = 0; h < a; h++){
+			for(int i = 0; i < a; i++){
+				for(int j = 0; j < a; j++){
+					
+					if(distance[i][h] + distance[h][j] < distance[i][j]){	
+						System.out.println(distance[i][h] + " " + distance[h][j] + " < " +  distance[i][j]);
+						distance[i][j] = distance[i][h] + distance[h][j];
+					}
+				}
+			}
+		}
+		print(distance);
+	}
+	static void print(int [][] a){
+		for(int [] x : a){
+			System.out.println(Arrays.toString(x));
+		}
+	}
+	static void initDstance(int a){
+		distance = new int[a][a];
+		for(int i = 0; i < distance.length; i++){
+			for(int j = 0 ; j < distance.length; j++){
+				distance[i][j] = i==j? 0 : 2000000;
+			}
+		}
+	}
+}

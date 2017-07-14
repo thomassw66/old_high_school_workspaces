@@ -1,0 +1,15 @@
+
+public class Bit {
+	public static void main(String[] args) {
+	  
+	    char[] verify_arr = {193, 35, 9, 33, 1, 9, 3, 33, 9, 225};
+
+	    for(int i = 0; i< verify_arr.length; i++){
+		    char ch = 0;
+		    while((((((ch << 5) | (ch >> 3)) ^ 111) & 255)) != verify_arr[i])
+		    	ch++;
+		    
+		    System.out.print(ch);
+	    }
+	  }
+}

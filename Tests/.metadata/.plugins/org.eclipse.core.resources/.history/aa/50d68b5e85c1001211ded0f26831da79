@@ -1,0 +1,10 @@
+import java.util.Arrays;
+
+
+public class Underscore {
+
+	public static void main(String [] ars){
+		int _ = -12;
+		System.out.println(_);
+	}
+}

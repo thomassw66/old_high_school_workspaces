@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+
+public class TheSnail {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		
+		for(float height = in.nextInt(), up  = in.nextInt(),d  = in.nextInt(),f = (in.nextInt()/100f) * up;
+				height != 0 && up != 0 && d != 0 && f != 0;
+				height = in.nextInt(), up  = in.nextInt(),d  = in.nextInt(),f = (in.nextInt()/100f) * up){
+			
+			float pos = 0;
+			int days = 1;
+			while(true){
+				pos += up;
+				if(pos >= height){
+					System.out.println(days);
+					break;
+				}
+				days++;
+				float newPos = pos - d;
+				if(newPos <= 0){
+					System.out.println(days);
+					break;
+				}
+				pos = newPos;
+				up = Math.max(0, up - f);
+			}
+		}
+	}
+}

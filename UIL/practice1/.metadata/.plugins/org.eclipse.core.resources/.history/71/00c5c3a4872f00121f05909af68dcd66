@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+
+public class TheSnail {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		
+		for(float height = in.nextInt(), up  = in.nextInt(),d  = in.nextInt(),f = (in.nextInt()/100f) * up;
+				height != 0 && up != 0 && d != 0 && f != 0;
+				height = in.nextInt(), up  = in.nextInt(),d  = in.nextInt(),f = (in.nextInt()/100f) * up){
+			
+			float pos = 0;
+			pos += up;
+			int days = 1;
+			for(;pos < height; days++){
+				//slide down
+				pos -= d;
+				//update fatigue
+				up = Math.max(up - f, 0);
+				if(pos < 0){
+					break;
+				}
+				pos += up;
+			}
+		}
+	}
+}

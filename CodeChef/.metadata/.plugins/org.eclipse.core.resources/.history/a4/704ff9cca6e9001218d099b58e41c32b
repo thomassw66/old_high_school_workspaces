@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+
+public class COUPON {
+
+	public static void main(String [] args){
+		Scanner in = new Scanner (System.in);
+		
+		int T = in.nextInt();
+		for(int t = 0; t < T; t++){
+			int N = in.nextInt();
+			int M = in.nextInt();
+			int [][] price = new int [M][N]; // M stores N products
+			int [][] disc  = new int [M][N];
+			int [][] d = new int [M][N];
+			for(int i = 0; i < N; i ++){
+				for(int j = 0; j < M; j++){
+					price[j][i] = in.nextInt();
+				}
+			}
+			for(int i = 0; i < N; i++){
+				for(int j = 0; j < M; j ++){
+					disc[j][i] = in.nextInt();
+				}
+			}
+			
+			for (int i = 0; i < M; i++){
+				d[i][0] = price[i][0];
+			}
+			for(int prod = 1; prod < N; prod++){
+				for(int store = 0; store < M; store ++){
+					int best = Integer.MAX_VALUE;
+					for(int store2 = 0; store2 < M; store2++){
+						if(store == store2){
+							int b = d[store2][prod-1] + Math.max(price[store][prod] - disc[store][prod-1],0);
+							if(b < best)best = b;
+						}else {
+							int b = d[store2][prod-1] + price[store][prod];
+							if(b < best)best = b;
+						}
+					}
+					d[store][prod] = best;
+				}
+			}
+			int m = Integer.MAX_VALUE;
+			for(int i = 0; i < M; i++){
+				m = Math.max(d[i][d[i].length-1], m);
+			}
+			System.out.println(m);
+		}
+	}
+}

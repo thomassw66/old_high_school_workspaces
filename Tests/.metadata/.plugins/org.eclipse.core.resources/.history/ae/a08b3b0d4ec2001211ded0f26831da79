@@ -1,0 +1,7 @@
+public class Underscore {
+    public static void main(String[] args) {
+        for (char c = ' '; c < 127; ++c) {
+            System.out.println(Integer.toString(c, 16) + " " + c);
+        }
+    }
+}

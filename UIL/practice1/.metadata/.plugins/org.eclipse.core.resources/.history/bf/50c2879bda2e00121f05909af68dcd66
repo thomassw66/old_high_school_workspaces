@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+
+public class TeX {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner (System.in);
+		String s = "";
+		while(in.hasNextLine()){
+			s += in.nextLine();
+		}
+		System.out.println(toTex(s));
+		in.close();
+	}
+	public static String toTex(String orig){
+		String ret = "";
+		boolean firstQuote = true;
+		for(int i = 0; i < orig.length(); i ++){
+			char c = orig.charAt(i);
+			if(c == '"'){
+				if(firstQuote){
+					ret += "``";
+				}else{
+					ret += "''";
+				}
+				firstQuote = !firstQuote;
+			}else{
+				ret += c;
+			}
+		}
+		return ret;
+	}
+}

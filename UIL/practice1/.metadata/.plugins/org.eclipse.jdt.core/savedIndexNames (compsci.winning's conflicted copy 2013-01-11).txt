@@ -1,0 +1,19 @@
+INDEX VERSION 1.126+/home/thomas/Dropbox/Public/workspaces/UIL/practice1/.metadata/.plugins/org.eclipse.jdt.core
+3681461080.index
+1012376231.index
+830771250.index
+1845214217.index
+4012027398.index
+2064801972.index
+330942987.index
+3953828136.index
+1050101097.index
+2575864013.index
+461720300.index
+2197329976.index
+1907798250.index
+3571058872.index
+3823420287.index
+168089738.index
+1577304585.index
+264363815.index

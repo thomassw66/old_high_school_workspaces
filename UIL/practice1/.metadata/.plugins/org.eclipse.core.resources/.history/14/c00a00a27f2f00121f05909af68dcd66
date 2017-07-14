@@ -1,0 +1,11 @@
+
+public class TheSnail {
+
+	public static void main(String[] args) {
+		int Height = 6;
+		int up = 3;
+		int d = 1; 
+		float f = 0/100f;
+		System.out.println(f);
+	}
+}

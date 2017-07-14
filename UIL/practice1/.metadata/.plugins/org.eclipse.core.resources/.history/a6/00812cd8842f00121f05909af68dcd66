@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+
+public class TheSnail {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		
+		int height = in.nextInt();
+		float up  = in.nextInt();
+		int d  = in.nextInt(); 
+		float f = (in.nextInt()/100f) * up;
+		//while somethings not zero
+		while(height != 0 || up != 0 || d != 0 || f != 0){
+			float pos = 0;
+			int days = 1;
+			while(true){
+				
+				//go up
+				pos += up;
+				
+				//if were out
+				if(pos > height){
+					System.out.printf("succeeded on day %d\n",days);
+					break;
+				}
+
+				//fatifue
+				up = Math.max(up - f, 0);
+				
+				//slide down at night
+				pos -= d;
+				//if we fall down to zero
+				if(pos <= 0){
+					System.out.printf("failure on day %d\n",days);
+					break;
+				}
+
+				//finished the day
+				days++;
+				
+				//System.out.println(pos);
+				
+			}
+			height = in.nextInt();
+			up  = in.nextInt();
+			d  = in.nextInt(); 
+			f = (in.nextInt()/100f) * up;
+		}
+	}
+}

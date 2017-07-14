@@ -1,0 +1,56 @@
+
+import java.util.Arrays;
+import java.util.Scanner;
+import java.awt.Point;
+import java.awt.geom.*;
+
+public class CIRKILL {
+
+	public static void main(String [] args){
+		Scanner in = new Scanner (System.in);
+		int T = in.nextInt();
+		for(int i = 0; i < T; i++){
+			int N = in.nextInt();
+			Point [] points = new Point [N];
+			for(int j = 0 ;j < N; j++){
+				points[j] = new Point(in.nextInt(), in.nextInt());
+			}
+			int totalWays = 0;
+			int waysforashtodie = 0;
+
+			for(int j = 0; j < N; j++){
+				for(int k = j + 1; k < N; k++){
+					for(int h = k + 1; h < N; h++){
+						
+						double a = distance(points[j],points[k]);
+						double b = distance(points[k],points[h]);
+						double c = distance(points[h],points[j]);
+						
+
+						Point bsjk = new Point((points[j].x + points[k].x) / 2,(points[j].y + points[k].y) / 2);
+						double m = (points[j].y - points[k].y) / (points[j].x - points[k].x);
+					}
+				}
+			}
+			System.out.println((double)waysforashtodie / (double)totalWays);
+		}
+	}
+	static double distance(Point a,Point b){
+		return distance(a.x, a.y, b.x, b.y);
+	}
+	public static double distance(double x, double y, double x1, double y1){
+		double dx = (x - x1);
+		double dy = (y - y1);
+		return Math.sqrt(dx*dx+dy*dy);
+	}
+	Line2D makeLine(Point p, double m){
+		if(!Double.isInfinite(m)){
+			double yint = p.y - m*p.x;
+			double x = p.x + 1;
+			double y = m * x + yint;
+			return new Line2D.Double(p,new Point(x , y));
+		}else {
+			return new Line2D.Double(p,new Point(p.x,p.y+1));
+		}
+	}
+}

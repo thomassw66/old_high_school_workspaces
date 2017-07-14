@@ -1,0 +1,20 @@
+import java.awt.Toolkit;
+public class IntevervalTime {
+
+	public static void main(String[] args) {
+		System.out.println("-----------------Start" +
+				"_________________");
+		int count = 1;
+		while(true){
+			try {
+				Thread.sleep(40000);
+				Toolkit.getDefaultToolkit().beep();
+				System.out.println("_____________________DONE______________________Question_"+count++);
+			} catch (InterruptedException e) {
+				System.err.print("AHHH\n");
+			}
+		}
+
+	}
+
+}

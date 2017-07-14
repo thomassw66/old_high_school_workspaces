@@ -1,0 +1,14 @@
+import java.util.HashSet;
+
+public class BreakingHashmap {
+    public static void main(String[] p) {
+        HashSet<Integer> set = new HashSet<Integer>();
+        int i = 0;
+        long t = System.currentTimeMillis();
+        set.add(i);
+        while ((i += 16) != 0) {
+            set.add(i);
+            System.out.println(i + ": " + (System.currentTimeMillis() - t));
+        }
+    }
+}

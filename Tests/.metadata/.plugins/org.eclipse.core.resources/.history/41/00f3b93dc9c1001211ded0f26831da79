@@ -1,0 +1,8 @@
+
+public class VoidTest {
+ 
+    public static void main(String[]args) {
+        Void v = null;
+        System.out.println(v.hashCode());
+    }
+}

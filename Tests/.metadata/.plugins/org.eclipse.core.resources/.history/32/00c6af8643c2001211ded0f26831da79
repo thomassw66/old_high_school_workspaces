@@ -1,0 +1,8 @@
+
+public class PrintfStuff {
+
+    public static void main(String [] args) {
+        
+        System.out.printf("$%3$-3d",32,5,18 );
+    }
+}

@@ -1,0 +1,18 @@
+import java.util.Scanner;
+
+
+public class Nautical {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner (System.in);
+		int n = in.nextInt();
+		
+		for(int i = 0; i < n; i++){
+			double d= in.nextDouble();
+			d *= 1.15;
+			System.out.printf("%0.1d",d);
+		}
+
+	}
+
+}

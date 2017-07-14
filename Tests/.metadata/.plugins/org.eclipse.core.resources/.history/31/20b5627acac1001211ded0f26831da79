@@ -1,0 +1,7 @@
+public class Visibility {
+    
+    public static void main(String[] arfsd) {
+        Invisible i = new Invisible();
+        System.out.println(i.isVisible());
+    }
+}

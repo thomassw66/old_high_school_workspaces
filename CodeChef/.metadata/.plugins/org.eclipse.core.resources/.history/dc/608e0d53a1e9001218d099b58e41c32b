@@ -1,0 +1,19 @@
+
+public class NUMFACT {
+
+	public static void main(String [] args){
+		boolean [] seive = new boolean[1000001];
+		int [] primes = new int[78498];
+		int pcount = 0;
+		for(int i = 2; i < seive.length; i++){
+			if(!seive[i]){
+				//System.out.println(i);
+				primes[pcount++] = i;
+				for(int m = i + i; m <= 1000000; m += i){
+					seive[m] = true;
+				}
+			}
+		}
+		System.out.println(pcount);
+	}
+}

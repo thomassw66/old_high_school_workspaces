@@ -1,0 +1,8 @@
+public class Casting {
+    
+    public static void main(String[] _) {
+        Integer i;
+        int x = 0;
+        i = x;
+    }
+}

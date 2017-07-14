@@ -1,0 +1,36 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Scanner;
+
+
+public class SearchingQuickly {
+
+	public static void main(String[] args) {
+		System.out.println(Arrays.toString("asd s      sdsad  sdfas".split(" +")));
+		HashMap<String,Boolean> wti = new HashMap<String,Boolean>();
+		Scanner in = new Scanner (System.in);
+		
+		String input;
+		while(!(input = in.nextLine()).equals("::")){
+			wti.put(input, true);
+		}
+		while(in.hasNextLine()){
+			String [] a  = in.nextLine().split(" *");
+			
+		}
+	}
+}
+class KWICThing implements Comparable<KWICThing>{
+	String before,after,KEYWORD;
+	public KWICThing(String b,String a,String k){
+		before = b;
+		after = a;
+		KEYWORD = k.toUpperCase();
+	}
+	public int compareTo(KWICThing arg0) {
+		return KEYWORD.compareTo(arg0.KEYWORD);
+	}
+	public String toString (){
+		return before + " " + KEYWORD + " " + after;
+	}
+}

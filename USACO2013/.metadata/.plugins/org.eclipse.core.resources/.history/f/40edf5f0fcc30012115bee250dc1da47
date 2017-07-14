@@ -1,0 +1,14 @@
+import java.io.*;
+import java.util.StringTokenizer;
+
+public class photo {
+
+	public static void main (String p[]) throws IOException{
+		BufferedReader read = new BufferedReader (new InputStreamReader(System.in));
+		StringBuffer input = new StringBuffer(10000);
+		int n;
+		while((n=read.read())>0)input.append((char)n);
+		StringTokenizer chop = new StringTokenizer(input.toString());
+		while(chop.hasMoreTokens())System.out.println(chop.nextToken());
+	}
+}

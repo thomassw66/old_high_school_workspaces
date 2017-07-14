@@ -1,0 +1,13 @@
+import java.math.BigInteger;
+
+
+public class CarmichealNumber {
+
+	public static void main(String []args){
+		BigInteger b = BigInteger.valueOf(1729);
+		int i = 2;
+		while(i < 1729 && b.modPow(BigInteger.valueOf(i),BigInteger.valueOf(i)).compareTo(b)!=0)
+			i++;
+		System.out.println(i);
+	}
+}

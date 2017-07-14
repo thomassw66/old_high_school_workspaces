@@ -1,0 +1,7 @@
+public class Underscore {
+    public static void main(String[] ars) {
+        for (char c = ' '; c < 127; ++c) {
+            System.out.println(new Integer(c) + ' ' + c);
+        }
+    }
+}

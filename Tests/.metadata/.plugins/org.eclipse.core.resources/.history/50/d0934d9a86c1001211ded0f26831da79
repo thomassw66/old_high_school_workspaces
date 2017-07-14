@@ -1,0 +1,10 @@
+
+public class ShiftTest {
+
+	public static void main(String [] asdf) {		
+		int x = 1;
+		for(int i = 0; i < 32; i++){
+			System.out.println(i >>> x);
+		}
+	}
+}

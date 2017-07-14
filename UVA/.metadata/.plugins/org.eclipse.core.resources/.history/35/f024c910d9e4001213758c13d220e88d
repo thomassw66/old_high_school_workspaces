@@ -1,0 +1,81 @@
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+
+
+public class QinShiRoadSystem {
+
+	public static void main(String [] args){
+		Scanner in = new Scanner (System.in);
+		int cases = in.nextInt();
+		for(int casess = 0; casess < cases; casess++)
+		{
+			int cities = in.nextInt();
+			Node [] n = new Node[cities];
+			double [][] weights = new double [cities][cities];
+			for(int i = 0; i < cities; i++){
+				n[i] = new Node(in.nextInt(), in.nextInt());
+			}
+			for(int i = 0; i < cities; i++){
+				for(int j = 0; j < cities; j++){
+					if(i != j)
+						n[i].addEdge(n[j]);
+				}
+			}
+
+			System.out.println(prims(n));
+		}
+	}
+	static Set<Edge> prims(Node [] nodes){
+		Set<Edge> minspan = new TreeSet<Edge>();
+		PriorityQueue<Edge> q = new PriorityQueue<Edge>(); 
+		for(int i = 0 ; i < nodes[0].edges.size(); i++){
+			q.add(nodes[0].edges.get(i));
+		}
+		nodes[0].intree = true;
+		
+		while(!q.isEmpty()){
+			Edge n = q.poll();
+			Node node = n.cities.get(1);
+			if(node.intree) continue;
+			minspan.add(n);
+			
+			for(int i = 0; i < node.edges.size(); i++){
+				q.add(node.edges.get(i));
+			}
+			node.intree = true;
+		}
+		return minspan;
+	}
+}
+class Edge implements Comparable<Edge>{
+	double dist;
+	ArrayList<Node> cities;
+	public Edge(Node a, Node b, double dist){
+		this.dist = dist;
+		cities = new ArrayList<Node>();
+		cities.add(a);
+		cities.add(b);
+	}
+	public int compareTo(Edge o) {
+		if(this.dist < o.dist)
+			return -1;
+		else return 1;
+	}
+	
+}
+class Node{
+	boolean intree = false;
+	int x, y;
+	ArrayList<Edge> edges;
+	public Node(int x, int y){
+		this.x = x;
+		this.y = y;
+		edges =  new ArrayList<Edge>();
+	}
+	void addEdge(Node toNode){
+		edges.add(new Edge(this, toNode, Math.sqrt(Math.pow((this.x-toNode.x),2) + Math.pow((this.y - toNode.y), 2))));
+	}
+}

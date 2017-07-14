@@ -1,0 +1,15 @@
+public class RandomStuff {
+    public static void main(String[] args) {
+        long zeroCount = 0L, max = 9000000000000000L; // 9 quadrillion
+        
+        System.out.println(Math.ulp(0.75f));
+        
+        for (long i = 0L; i < max; ++i) {
+            if ((float) Math.random() == 0.0f) {
+                ++zeroCount;
+                System.out.print(".");
+            }
+        }
+        System.out.println("\n" + zeroCount + " zeroes out of " + max + " trials");
+    }
+}

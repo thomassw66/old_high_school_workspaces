@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+
+public class Billiards {
+
+	public static void main(String[] args){
+		Scanner in = new Scanner (System.in);
+		while(true){
+			int a = in.nextInt();
+			int b = in.nextInt();
+			int s = in.nextInt();
+			int m = in.nextInt();
+			int n = in.nextInt();
+			if(s <= 0)break;
+			int dist2 = m*b*m*n + a*n*a*n;
+			double distance = Math.sqrt((double) dist2);
+			System.out.println(dist2);
+			double speed = distance / (double)s;
+			double tan = b*m / (a*n);
+			double theta = Math.atan(tan);
+			System.out.printf("%.2f %.2f\n", theta,speed);
+		}
+	}
+}

@@ -1,0 +1,78 @@
+
+public class Soundex {
+
+	public static void main(String[] args) 
+	{
+		System.out.println(generateSoundex("KUHNE"));
+	}
+	static String generateSoundex(String name){
+		String ret = "";
+		
+		char m = name.charAt(0);
+		int last = getSoundexCode(m);
+		
+		ret += m;
+		
+		int totalcode = 0;
+		
+		for(int i = 1; i < name.length();i++){
+			m = name.charAt(i);
+			int code = getSoundexCode(m);
+			
+			if(code == -1){
+				last = code;
+				continue;
+			}else if(code == last){
+				//this is the same as the last code and we can ignore it
+				continue;
+			}
+			else{
+				totalcode *= 10;
+				totalcode += code;
+				
+				last = code;
+			}
+		}
+		String num = totalcode+"";
+		while(num.length() < 3){
+			num = "0" + num;
+		}
+		ret += num;
+		if(ret.length() > 4){
+			ret = ret.substring(0,4);
+		}
+		return ret;
+	}
+	static int getSoundexCode(char c){
+		switch(c){
+		case 'B':
+		case 'P':
+		case 'F':
+		case 'V':
+			return 1;
+		case 'C':
+		case 'S':
+		case 'K':
+		case 'G':
+		case 'J':
+		case 'Q':
+		case 'X':
+		case 'Z':
+			return 2;
+		case 'D':
+		case 'T':
+			return 3;
+		case 'L':
+			return 4;
+		case 'M':
+		case 'N':
+			return 5;
+		case 'R':
+			return 6;
+			
+		//negative one if its a vowel and not encoded
+		default:
+			return -1;
+		}
+	}
+}

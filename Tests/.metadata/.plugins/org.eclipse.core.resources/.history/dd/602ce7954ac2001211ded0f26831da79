@@ -1,0 +1,13 @@
+public class RandomStuff {
+    public static void main(String[] args) {
+        long zeroCount = 0L, max = 16777216L; // 16,777,216 = 2^24
+        
+        for (long i = 0L; i < max; ++i) {
+            if ((float)Math.random() == 0.0f) {
+                ++zeroCount;
+                System.out.print(".");
+            }
+        }
+        System.out.println("\n" + zeroCount + " zeroes out of " + max + " trials");
+    }
+}

@@ -1,0 +1,192 @@
+package NeuralNet;
+
+import java.io.Serializable;
+import java.util.Random;
+
+
+public class NeuralNetwork implements Serializable{
+	
+	private int layerCount;
+	private int [] layerSize; //array of dimension layerCount that holds sizes of each layer
+	
+	private int inputSize;
+	private TransferFunction [] transferFunction;
+	
+	private double [][] layerOutput; // layerOutput [(layer)][(node)]
+	private double [][] layerInput; // layerInput [(layer)][(node)]
+	
+	private double [][] biases;// bias for  [(layer)][(node)]
+	
+	private double [][] delta; // delta for  [(layer)][(node)]
+	private double [][] previousBiasDelta;// delta for bias terms during last training iteration [(layer)][(node)]
+
+	private double [][][] weights; 
+	private double [][][] previousWeightDelta;
+	
+	//initializes a new neural network
+	public NeuralNetwork(int [] layerSizes, TransferFunction [] transferFunctions){
+
+		assert(layerSizes.length == transferFunctions.length);
+		
+		inputSize = layerSizes[0];
+		
+		layerCount = layerSizes.length - 1;
+		layerSize = new int [layerCount];
+		
+		for(int i = 0; i < layerCount; i++)
+			layerSize[i] = layerSizes[i+1];
+		
+		transferFunction = new TransferFunction [layerCount];
+		for(int i = 0 ; i < layerCount; i++)
+			transferFunction[i] = transferFunctions[i+1];
+		
+		biases = new double[layerCount][];
+		delta = new double[layerCount][];
+		previousBiasDelta = new double[layerCount][];
+		layerOutput = new double[layerCount][];
+		layerInput = new double[layerCount][];
+		
+		weights = new double [layerCount][][];
+		previousWeightDelta = new double [layerCount][][];
+		
+		for(int i = 0 ; i <  layerCount; i++)
+		{
+			biases[i] = new double [layerSize[i]];
+			delta[i] = new double [layerSize[i]];
+			previousBiasDelta[i] = new double [layerSize[i]];
+			
+			layerOutput[i] = new double [layerSize[i]];
+			layerInput[i] = new double [layerSize[i]];
+			
+			weights[i] = new double [i==0? inputSize : layerSize[i-1]][];
+			previousWeightDelta[i] = new double [i==0? inputSize : layerSize[i-1]][];
+			
+			for(int c = 0; c < (i==0? inputSize : layerSize[i-1]); c++){
+				weights[i][c] = new double [layerSize[i]];
+				previousWeightDelta[i][c] = new double [layerSize[i]];
+			}
+		}
+
+		Random r = new Random();
+		
+		for(int i = 0; i < layerCount; i++)
+		{	
+			for(int j = 0; j < layerSize[i]; j++)
+			{
+				biases [i][j] = r.nextGaussian();
+				layerOutput[i][j] = 0.0;
+				layerInput[i][j] = 0.0;
+				delta[i][j] = 0.0;
+			}
+			
+			for(int j = 0; j < (i==0? inputSize : layerSize[i-1]); j++)
+			{
+				for(int k = 0; k < layerSize[i];k++)
+				{
+					weights[i][j][k] = r.nextGaussian();
+					previousWeightDelta[i][j][k] = 0.0;
+				}
+			}
+		}
+	}
+	
+	public void run(double [] inputs, double [] output){
+		assert(inputs.length == inputSize);
+		
+		//output = new double[layerSize[layerCount - 1]];
+		
+		for(int layer = 0; layer < layerCount; layer ++)
+		{
+			for(int node = 0; node < layerSize[layer]; node ++)
+			{
+				double sum = 0.0; 
+				for(int otherNode = 0; otherNode < (layer == 0? inputSize : layerSize[layer-1]); otherNode++)
+					sum += weights[layer][otherNode][node] * (layer == 0? inputs[otherNode] : layerOutput[layer-1][otherNode]);
+				
+				sum += biases[layer][node];
+				
+				layerInput[layer][node] = sum;
+				layerOutput[layer][node] = transferFunction[layer].evaluate(sum);
+			}
+		}
+		for(int i = 0; i < layerSize[layerCount-1]; i++)
+			output[i] = layerOutput[layerCount-1][i];
+	}
+	
+	public double train(double [] input, double [] desiredOutput, double trainingRate, double momentum){
+		
+		double error = 0.0,sum = 0.0, weightDelta = 0.0, biasDelta = 0.0;
+		double [] output = new double[layerSize[layerCount-1]];
+		
+		run(input, output);
+		
+		for(int layer = layerCount-1; layer >= 0; layer --)
+		{
+			if(layer == layerCount-1)
+			{
+				for(int k = 0; k < layerSize[layer]; k++){
+					delta[layer][k] = output[k] - desiredOutput[k];
+					error += Math.pow(delta[layer][k], 2);
+					delta[layer][k] *= transferFunction[layer].evaluateDerivitive(layerInput[layer][k]);
+				}
+			}
+			else 
+			{
+				for(int node = 0; node < layerSize[layer]; node ++)
+				{
+					sum = 0.0;
+					for(int i = 0; i < layerSize[layer+1]; i++)
+						sum += weights[layer + 1][node][i] * delta[layer+1][i];
+					
+					sum *= transferFunction[layer].evaluateDerivitive(layerInput[layer][node]);
+					
+					delta[layer][node] = sum;
+				}
+			}
+		}
+		//update weights & biases
+		for(int layer = 0; layer < layerCount; layer ++)
+			for(int i = 0; i < (layer == 0 ? inputSize : layerSize[layer-1]); i++)
+				for(int j = 0; j < layerSize[layer]; j++){
+
+					weightDelta = trainingRate * delta[i][j] * ((layer == 0)? input[i] : layerOutput[layer - 1][i]);
+					weights[layer][i][j] -= weightDelta;// + momentum * previousWeightDelta[layer][i][j];
+					
+					previousWeightDelta[layer][i][j] = weightDelta;
+				}
+		for(int l = 0; l < layerCount; l ++){
+			for(int i = 0 ; i < layerSize[l]; i++){
+				biasDelta = trainingRate * delta[l][i];
+				biases[l][i] -= biasDelta;// + momentum * previousBiasDelta[l][i];
+				previousBiasDelta[l][i] = biasDelta;
+			}
+		}
+		return error;
+	}
+	
+	/* Derivitive of cost function in respect to weight[i][j]: 
+	 * 
+	 * let omega[k] = (output[k] - desiredoutput) * dsig(in[k]);
+	 * 
+	 * from i to j when j is a final output node
+	 * 		omega[j] * output[i] 
+	 * for all inside nodes :
+	 * 		output[i] * dsig(in[j]) * sum_of_all_k((omega[k] * weight[j][k]))
+	 * */
+	public static void main(String [] args){
+		int [] lsizes = {1,2,1};
+		TransferFunction s = new SigmoidTransferFunction();
+		TransferFunction [] tfuncs = {null, s,s};
+		NeuralNetwork myNet = new NeuralNetwork(lsizes,tfuncs);
+		
+		double [] out = new double[1];
+		for(int i = 0; i < 5000; i++){
+
+			double [] in = {Math.random()};
+			double [] desired = {.5};
+			myNet.train(in,desired,.15,.1);
+			myNet.run(in, out);
+			System.out.println(out[0]);
+		}
+	}
+}

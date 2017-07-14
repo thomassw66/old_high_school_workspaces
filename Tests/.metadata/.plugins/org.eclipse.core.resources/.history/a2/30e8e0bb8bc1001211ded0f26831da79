@@ -1,0 +1,9 @@
+public class ShiftTest {
+    
+    public static void main(String[] asdf) {
+        int x = Integer.MIN_VALUE;
+        for (int i = 0; i < 32; i++) {
+            System.out.println(x >>> i);
+        }
+    }
+}

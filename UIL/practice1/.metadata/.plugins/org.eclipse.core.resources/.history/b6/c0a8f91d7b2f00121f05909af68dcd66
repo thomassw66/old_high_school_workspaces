@@ -1,0 +1,98 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Scanner;
+
+
+public class MapMaker {
+	
+	
+	public static void main(String[] args) {
+		Scanner in = new Scanner (System.in);
+		HashMap<String, ArrayReference> defined = new HashMap<String,ArrayReference>();
+		int defs = in.nextInt();
+		int refs = in.nextInt();
+		in.nextLine();
+		
+		for(int i = 0; i < defs; i++){
+			String name = in.next();
+			System.out.println(name);
+			int base = in.nextInt();
+			int bpe = in.nextInt();
+			int dem = in.nextInt();
+			System.out.println(dem);
+			defined.put(name, new ArrayReference(name, base, dem, bpe));
+			for(int j = 0; j < dem; j++){
+				
+				int l = in.nextInt();
+				int u = in.nextInt();
+				
+				defined.get(name).addDimension(l, u);
+			}
+			defined.get(name).generate();
+			in.nextLine();
+		}
+		for(int i = 0; i < refs; i++){
+			String name = in.next();
+			ArrayReference ref = defined.get(name);
+			
+			int [] indicies = new int [ref.dimensions];
+			
+			System.out.print(name+"[");
+			
+			indicies[0] = in.nextInt();
+			System.out.printf("%d",indicies[0]);
+			
+			for(int j = 1; j < ref.dimensions; j++){
+				indicies[i] = in.nextInt();
+				System.out.printf(", %d", indicies[i]);
+			}
+			System.out.printf("] = %d\n", ref.calcAddr(indicies));
+			System.out.println(Arrays.toString(indicies) + ", "+ref.dimensions);
+			in.nextLine();
+			
+		}
+	}
+
+}
+class ArrayReference {
+	String name;
+	int baseAddr;
+	int dimensions;
+	int bytesPerElement;
+	int C0;
+	int [] upperBounds,lowerBounds;
+	int [] C;
+	int count = 0;
+	public ArrayReference(String n, int b, int d, int bpe){
+		name = n;
+		baseAddr = b;
+		dimensions = d;
+		upperBounds = new int [dimensions];
+		lowerBounds = new int [dimensions];
+		C = new int [dimensions];
+		bytesPerElement = bpe;
+	}
+	public void addDimension(int l, int u){
+		upperBounds[count] = u;
+		lowerBounds[count] = l;
+		count++;
+	}
+	public void generate(){
+		C[dimensions - 1] = bytesPerElement;
+		//we do this down
+		for(int i = dimensions - 1; i > 0; i--){
+			C[i-1] = C[i] * (upperBounds[i] - lowerBounds[i]+ 1);
+		}
+		C0 = baseAddr;
+		for(int i = 0; i < dimensions; i++){
+			C0 -= (C[i] * upperBounds[i]);
+		}
+	}
+	public int calcAddr(int [] indexes){
+		int sum = C0;
+		for(int i = 0; i < dimensions; i++){
+			sum += (C[i] * indexes[i]);
+		}
+		return sum;
+	}
+}

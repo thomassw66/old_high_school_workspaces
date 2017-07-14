@@ -1,0 +1,5 @@
+public class RandomStuff {
+    public static void main(String[] args) {
+        System.out.println(1.0 / Math.ulp(0.75));
+    }
+}

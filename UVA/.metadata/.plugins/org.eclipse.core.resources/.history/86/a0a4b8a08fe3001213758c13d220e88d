@@ -1,0 +1,30 @@
+import java.util.Scanner;
+
+
+public class CrossedLadders {
+
+	public static void main(String []args){
+		Scanner in = new Scanner (System.in);
+		
+		double x = in.nextDouble();
+		double y = in.nextDouble();
+		double c = in.nextDouble();
+		
+		double left = 0;
+		double right = Math.min(x, y);
+		bsearch
+		(x,y,c);
+	}
+	static void bsearch(double x, double y, double c){
+		double m = 8.0;
+		double h1 = Math.sqrt(x*x - m*m);
+		double h2 = Math.sqrt(y*y - m*m);
+		System.out.println(f(h1,m,intersect(h1,h2,m)));
+	}
+	static double f(double h1, double m, double x){
+		return h1 - h1 / m * x;
+	}
+	static double intersect(double h1, double h2, double m){
+		return h1*m / (h1+h2);
+	}
+}

@@ -1,0 +1,15 @@
+
+public class EuclidProblem {
+
+	public static void main(String [] args){
+		Integer a = new Integer (10);
+		v(a);
+		System.out.println(a);
+	}
+	public static void v(Integer n){
+		n += 13345;
+	}
+	long gcd(long p,long q){
+		return 0;
+	}
+}

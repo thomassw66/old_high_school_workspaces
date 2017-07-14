@@ -1,0 +1,18 @@
+
+public class Marbles {
+	static void allPosible(int marbles,int n1,int n2){
+		int one;
+		for(one = 0; one * n1 <= marbles; one++){
+			//System.out.println(one * n1);
+			int m = marbles - one;
+			System.out.println(m);
+			if(m % n2 == 0){
+				System.out.println(one + " " + m / n2);
+			}
+		}
+	}
+	public static void main(String[] args) {
+		allPosible(43,3,4);
+	}
+
+}

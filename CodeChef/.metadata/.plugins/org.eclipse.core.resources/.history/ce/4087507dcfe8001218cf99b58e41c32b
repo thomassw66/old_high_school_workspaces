@@ -1,0 +1,17 @@
+
+public class KPRIME {
+
+	static int [] kprime = new int [100001];
+	public static void main(String [] args){
+		for(int i = 2;i <= 100000; i++){
+			if (kprime[i]==0){//its prime
+				int m = i;
+				do{
+					kprime[m]++;
+					m += i;
+				}while(m <= 100000);
+			}
+		}
+		System.out.println("wf");
+	}
+}

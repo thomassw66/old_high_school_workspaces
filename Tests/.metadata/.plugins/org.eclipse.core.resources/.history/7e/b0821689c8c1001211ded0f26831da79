@@ -1,0 +1,14 @@
+import java.util.HashMap;
+
+public class BreakingHashmap {
+    public static void main(String[] p) {
+        HashMap<String, Void> set = new HashMap<String, Void>(1, Float.MIN_NORMAL);
+        String value = "";
+        int i = 0;
+        long t = System.currentTimeMillis();
+        while (++i != Integer.MIN_VALUE) {
+            set.put(new String(value), null);
+            System.out.println("Index " + i + ": " + (System.currentTimeMillis() - t));
+        }
+    }
+}

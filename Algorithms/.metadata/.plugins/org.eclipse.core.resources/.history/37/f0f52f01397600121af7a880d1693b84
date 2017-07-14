@@ -1,0 +1,33 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+
+public class FloydWorshall {
+	public static int [][] distance;
+	public static void main(String [] asdf){
+		Scanner input = new Scanner (System.in);
+		int a = input.nextInt();
+		distance = new int[a][a];
+		int cons = input.nextInt();
+		for(int i = 0; i < cons; i++){
+			int from = input.nextInt();
+			int to = input.nextInt();
+			int dist = input.nextInt();
+			distance[from][to] = dist;
+		}
+		
+		print(distance);
+	}
+	static void print(int [][] a){
+		for(int [] x : a){
+			System.out.println(Arrays.toString(x));
+		}
+	}
+	static void initDstance(){
+		for(int i = 0; i < distance.length; i++){
+			for(int j = 0 ; j < distance.length; j++){
+				distance[i][j] = i==j? 0 : 2000000;
+			}
+		}
+	}
+}

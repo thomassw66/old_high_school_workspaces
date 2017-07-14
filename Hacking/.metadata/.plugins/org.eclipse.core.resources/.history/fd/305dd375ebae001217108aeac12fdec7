@@ -1,0 +1,16 @@
+import java.util.Scanner;
+import java.util.TreeSet;
+
+
+public class ExtraRemover {
+
+	public static void main(String [] args){
+		TreeSet<String> t = new TreeSet<String>();
+		Scanner in = new Scanner (System.in);
+		String [] s = in.nextLine().split("\\s");
+		for(String l : s){
+			t.add(l);
+		}
+		System.out.println(t.size() + " " + s.length);
+	}
+}

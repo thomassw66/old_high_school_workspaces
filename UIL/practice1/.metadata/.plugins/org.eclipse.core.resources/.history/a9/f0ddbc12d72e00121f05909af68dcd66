@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+
+public class TheeNPlus1 {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		
+		while(in.hasNext()){
+			int max = 0;
+			int l = in.nextInt();
+			int h = in.nextInt();
+			for(int i = l; i <= h; i++){
+				int length = cycleLength(i);
+				if(length > max)
+					max = length;
+			}
+			System.out.printf("%d %d %d\n", l, h, max);
+			in.nextLine();
+		}
+	}
+	public static int cycleLength(int n){
+		if(n ==1 ) return 1;
+		
+		int l = 1;
+		if((n % 2) == 0){
+			//n is even
+			l+= cycleLength(n / 2);
+		}else{
+			//n is odd
+			l += cycleLength(3 * n + 1);
+		}
+		return l;
+	}
+}

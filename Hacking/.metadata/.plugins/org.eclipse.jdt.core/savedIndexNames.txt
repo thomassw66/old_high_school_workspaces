@@ -1,0 +1,2 @@
+INDEX VERSION 1.126+C:\Users\Thomas\Dropbox\Public\workspaces\Hacking\.metadata\.plugins\org.eclipse.jdt.core
+1933666795.index

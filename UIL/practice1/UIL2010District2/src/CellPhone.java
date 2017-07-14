@@ -1,0 +1,18 @@
+import java.util.Scanner;
+
+
+public class CellPhone {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int c1 = 0,c2 = 0;
+		while(in.hasNext()){
+			double d = in.nextDouble();
+			c1 += Math.floor(d);
+			c2 += Math.ceil(d);
+		}
+		System.out.printf("PLAN A: %d%n",c1);
+		System.out.printf("PLAN B: %d%n",c2);
+	}
+
+}

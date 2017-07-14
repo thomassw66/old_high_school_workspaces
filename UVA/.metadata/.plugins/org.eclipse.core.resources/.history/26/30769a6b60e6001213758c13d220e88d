@@ -1,0 +1,101 @@
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+
+
+public class QinShiRoadSystem {
+
+	public static void main(String [] args){
+		Scanner in = new Scanner (System.in);
+		int co = in.nextInt();
+		for(int cot = 0; cot < co; cot++){
+			int n = in.nextInt();
+			int x[] = new int [n];
+			int y[] = new int [n];
+			int population [] = new int [n];
+			for(int i = 0; i < n; i++){
+				x[i] = in.nextInt();
+				y[i] = in.nextInt();
+				population[i] = in.nextInt();
+			}
+			ArrayList<Double> [] distance = new ArrayList[n];
+			ArrayList<Integer>[] vertex = new ArrayList[n];
+			for(int i = 0; i < n; i++){//make the graph
+				distance[i] = new ArrayList<Double>(n);
+				vertex[i] = new ArrayList<Integer>(n);
+				for(int j = 0; j < n; j++){
+					if(i != j){
+						vertex[i].add(j);
+						distance[i].add(Math.sqrt((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j]) * (y[i] - y[j])));
+					}
+				}
+			}
+			for(int i = 0; i < n; i++){
+				for(int j = i +1; j < n; j++){
+					System.out.println(i + " " + j + " " +modifiedprims(distance,vertex,n,i,j));
+				}
+			}
+		}
+	}
+	// min spaning tree with a & b already connected
+	static double modifiedprims(ArrayList<Double > [] distances, ArrayList<Integer> [] vertex, int n, int a, int b){
+		boolean [] intree = new boolean [n];
+		double d [] = new double [n];
+		
+		double total = 0.0;
+		
+		for(int i = 0; i < n; i++){
+			intree [i] = false;
+			d[i] = Double.POSITIVE_INFINITY;
+		}
+		intree[a] = true;
+		intree[b] = true;
+		d[a] = 0.0;
+		d[b] = 0.0;
+		
+		for(int i = 0; i < distances[a].size(); i++){
+			int v = vertex[a].get(i);
+			double dist = distances[a].get(i);
+			if(dist < d[v]){
+				d[v] = dist;
+			}
+		}
+		for(int i = 0; i < distances[b].size(); i++){
+			int v = vertex[b].get(i);
+			double dist = distances[b].get(i);
+			if(dist < d[v]){
+				d[v] = dist;
+			}
+		}
+		int v = a;
+		double weight = Double.POSITIVE_INFINITY;
+		for(int i = 0; i < n; i ++){
+			if(!intree[i] && d[i] < weight){
+				v = i;
+				weight = d[i];
+			}
+		}
+		
+		while(intree[v] == false){
+			total += d[v];
+			intree[v] = true; // so we dont use it again
+			for(int i = 0; i < vertex[v].size(); i++){
+				double w = distances[v].get(i);
+				int next = vertex[v].get(i);
+				if(intree[next] == false && w < d[next]){
+					d[next] = w;
+				}
+			}
+			double w = Double.POSITIVE_INFINITY;
+			for(int i = 0; i < n; i++){
+				if(intree[i] == false && d[i] < w){
+					v = i;
+					w = d[i];
+				}
+			}
+		}
+		return total;
+	}
+}

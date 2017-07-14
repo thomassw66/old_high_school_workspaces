@@ -1,0 +1,55 @@
+
+public class MapMaker {
+	
+	
+	public static void main(String[] args) {
+		ArrayReference a = new ArrayReference("YOLO",3000,1,1);
+		a.addDimension(1, 9);
+		a.generate();
+		int [] indexes = {7};
+		int addy = a.calcAddr(indexes);
+		System.out.println(addy);
+	}
+
+}
+class ArrayReference {
+	String name;
+	int baseAddr;
+	int dimensions;
+	int bytesPerElement;
+	int C0;
+	int [] upperBounds,lowerBounds;
+	int [] C;
+	int i = 0;
+	public ArrayReference(String n, int b, int d, int bpe){
+		name = n;
+		baseAddr = b;
+		dimensions = d;
+		upperBounds = new int [dimensions];
+		lowerBounds = new int [dimensions];
+		C = new int [dimensions];
+		bytesPerElement = bpe;
+	}
+	public void addDimension(int u, int l){
+		upperBounds[i] = u;
+		lowerBounds[i] = l;
+		i++;
+	}
+	public void generate(){
+		C[dimensions - 1] = bytesPerElement;
+		for(int i = dimensions - 1; i > 0; i++){
+			C[i-1] = C[i] * (upperBounds[i] - lowerBounds[i]+ 1);
+		}
+		C0 = baseAddr;
+		for(int i = 0; i < dimensions; i++){
+			C0 -= (C[i] * upperBounds[i]);
+		}
+	}
+	public int calcAddr(int [] indexes){
+		int sum = C0;
+		for(int i = 0; i < dimensions; i++){
+			sum += (C[i] * indexes[i]);
+		}
+		return sum;
+	}
+}

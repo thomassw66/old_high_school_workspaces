@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+
+public class BlowingFuses {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner (System.in);
+		
+		int devices = in.nextInt();
+		int operations = in.nextInt();
+		int maximum = in.nextInt();
+		in.nextLine();
+		int cases = 0;
+		while(!(devices == 0 && operations == 0 && maximum == 0)){
+			int [] devicePowerConsumption = new int [devices];
+			for(int i = 0; i < devices; i++){
+				devicePowerConsumption[i] = Integer.parseInt(in.nextLine());
+			}
+			int powerConsumption = 0;
+			int m = 0;
+			boolean broke = false;
+			for(int i = 0; i < operations; i++){
+				//the input starts with 1 but arrays start with 0
+				int dev = Integer.parseInt(in.nextLine()) - 1;
+				powerConsumption += devicePowerConsumption[dev];
+				//so next time we toggle it will subtract from powerConsumption
+				devicePowerConsumption[dev] = - devicePowerConsumption[dev];
+				
+				if(powerConsumption > m){
+					m = powerConsumption;
+					if(m > maximum){
+						broke = true;
+					}
+				}
+			}
+			System.out.printf("Sequence %d\n", ++cases);
+			if(broke){
+				System.out.println("Fuse was blown.");
+			}else{
+				System.out.println("Fuse was not blown.");
+				System.out.printf("Maximum power consumption was %d amperes.\n", m);
+			}
+			System.out.println();
+			devices = in.nextInt();
+			operations = in.nextInt();
+			maximum = in.nextInt();
+			in.nextLine();
+		}
+	}
+
+}

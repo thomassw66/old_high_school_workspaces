@@ -1,0 +1,12 @@
+public class RandomStuff {
+    public static void main(String[] args) {
+        long zeroCount = 0L, max = 1000000000L; // 1 billion
+        
+        for (long i = 0L; i < max; ++i) {
+            if (Math.random() == 0.0) {
+                ++zeroCount;
+            }
+        }
+        System.out.println(zeroCount + " zeroes out of " + max + " trials");
+    }
+}

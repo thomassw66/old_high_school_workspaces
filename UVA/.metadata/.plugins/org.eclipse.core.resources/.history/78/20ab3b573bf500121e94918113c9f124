@@ -1,0 +1,43 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+
+public class SearchingQuickly {
+
+	public static void main(String [] args){
+		Scanner in = new Scanner (System.in);
+		ArrayList<String> wti = new ArrayList<String>(50);
+		String s;
+		while((s = in.nextLine()).compareTo("::") != 0){
+			wti.add(s);
+		}
+		ArrayList<String[]> pages = new ArrayList<String[]>();
+		String n;
+		while(in.hasNext()){
+			n = in.nextLine().toLowerCase();
+			pages.add(n.split(" +"));
+		}
+		System.out.println(Arrays.deepToString(pages.get(0)));
+	}
+}
+class SearchStruct implements Comparable<SearchStruct>{
+	String s;
+	int page;
+	int nth_word;
+	public SearchStruct(String s, int p, int n){
+		this.s = s;
+		page = p;
+		nth_word = n;
+	}
+	public int compareTo(SearchStruct s) {
+		int x = this.s.compareTo(s.s);
+		if(x == 0){
+			x = this.page - s.page;
+			if(x == 0){
+				x = this.nth_word - s.nth_word;
+			}
+		}
+		return x;
+	}
+}

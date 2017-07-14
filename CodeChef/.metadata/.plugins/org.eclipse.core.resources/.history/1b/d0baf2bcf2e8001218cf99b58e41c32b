@@ -1,0 +1,78 @@
+
+import java.util.Scanner;
+
+
+public class CIRKILL {
+
+	public static void main(String [] args){
+		Scanner in = new Scanner (System.in);
+		int T = in.nextInt();
+		for(int i = 0; i < T; i++){
+			int N = in.nextInt();
+			int [][] points = new int [N][2];
+			for(int j = 0 ;j < N; j++){
+				points[j][0] = in.nextInt();
+				points[j][1] = in.nextInt();
+			}
+			int totalWays = 0;
+			int waysforashtodie = 0;
+			for(int j = 0; j < N; j++){
+				for(int k = j + 1; k < N; k++){
+					for(int h = k + 1; j < N; h++){
+
+						double a = distance(points[j][0], points[j][1], points[k][0], points[k][1]);
+						double b = distance(points[h][0], points[h][1], points[k][0], points[k][1]);
+						double c = distance(points[j][0], points[j][1], points[h][0], points[h][1]);
+						
+						double s = (a+b+c)/2;
+						double area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+						
+						double bsax = (points[j][0] + points[k][0]) / 2.0;
+						double bsay = (points[j][1] + points[k][1]) / 2.0;
+						//lines perp in form of ax + by = c
+						double ba = points[j][1] - points[k][1]; // -rise
+						double aa = points[j][0] - points[k][0]; // -run
+						double ca = (aa * bsax + ba *bsay);
+						
+						double bsbx = (points[h][0] + points[k][0]) / 2.0;
+						double bsby = (points[h][1] + points[k][1]) / 2.0;
+						
+						double ab = points[h][1] - points[k][1]; // -rise
+						double bb = points[h][0] - points[k][0]; // -run
+						double cb = (ab * bsbx + bb * bsby);
+						
+						double x = (bb*ca-ba*cb)/ (bb*aa-ab*ba);
+						double y = 0.0;
+						if(Math.abs(ba) < 1E-6){ // aa == 0
+							y = (cb - ab*x)/bb;
+						}else{
+							y = (ca - aa*x)/ba;
+						}
+						
+						double radius = .5 * (a * b * c) / (2 * area);
+						
+						for(int n = 0; n < N; n++){
+							if(n != j && n != k && n != h){
+								//check if its within death radius
+
+								totalWays ++;
+								
+								int ax = points[n][0];
+								int ay = points[n][1];
+								if(distance(ax,ay,x,y) <= radius + 1E-6){
+									waysforashtodie ++;
+								}
+							}
+						}
+						
+					}
+				}
+			}
+		}
+	}
+	public static double distance(double x, double y, double x1, double y1){
+		double dx = (x - x1);
+		double dy = (y - y1);
+		return Math.sqrt(dx*dx+dy*dy);
+	}
+}

@@ -1,0 +1,105 @@
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+
+public class CIRKILL {
+
+	public static void main(String [] args){
+		Scanner in = new Scanner (System.in);
+		int T = in.nextInt();
+		for(int i = 0; i < T; i++){
+			int N = in.nextInt();
+			int [][] points = new int [N][2];
+			for(int j = 0 ;j < N; j++){
+				points[j][0] = in.nextInt();
+				points[j][1] = in.nextInt();
+			}
+			int totalWays = 0;
+			int waysforashtodie = 0;
+
+			for(int j = 0; j < N; j++){
+				for(int k = j + 1; k < N; k++){
+					for(int h = k + 1; h < N; h++){
+						
+						double a = distance(points[j],points[k]);
+						double b = distance(points[k],points[h]);
+						double c = distance(points[h],points[j]);
+						
+						Line jk = Line.lineFromPoints(points[j][0], points[j][1], points[k][0], points[k][1]);
+						Line kh = Line.lineFromPoints(points[k][0], points[k][1], points[h][0], points[h][1]);
+						Line hj = Line.lineFromPoints(points[h][0], points[h][1], points[j][0], points[j][1]);
+					
+						System.out.println(Arrays.toString(points[j]));
+						System.out.println(Arrays.toString(points[k]));
+						System.out.println(Arrays.toString(points[h]));
+						System.out.println(jk);
+						System.out.println(kh);
+						System.out.println(hj);
+						
+						Line bsjk = Line.perpendicular(jk, (points[j][0] +  points[k][0]) / 2.0, (points[j][1] +  points[k][1]) / 2.0);
+						Line bskh = Line.perpendicular(kh, (points[k][0] + points[h][0] ) / 2.0, (points[h][1] +  points[h][1]) / 2.0);
+						
+						double x = Line.intersect(bsjk, bskh);
+						double y = bsjk.getY(x);
+						
+						System.out.println(x + " " + y + " " + Line.parrallel(jk, kh));
+					}
+				}
+			}
+			System.out.println((double)waysforashtodie / (double)totalWays);
+		}
+	}
+	static double distance(int [] a,int [] b){
+		return distance(a[0], a[1], b[0], b[1]);
+	}
+	public static double distance(double x, double y, double x1, double y1){
+		double dx = (x - x1);
+		double dy = (y - y1);
+		return Math.sqrt(dx*dx+dy*dy);
+	}
+}
+class Line {
+	double a, b, c; //ax + by = c;
+	private Line(){}
+	public Line(double rise, double run, double x, double y){
+		if(Math.abs(run) > 1E-5){
+			double m = rise / run;
+			double intercept = y - x * m;
+			a = -m;
+			b = 1;
+			c = -intercept;
+		}else {
+			a = 1;
+			b = 0;
+			c = -x;
+		}
+	}
+	double getY(double x){
+		// ax + by + c = 0
+		return (-a * x - c) / b;
+	}
+	double getX(double y){
+		return (-b * y - c) / a;
+	}
+	//the x value of intersect
+	static double intersect(Line a, Line b){
+		return (a.b * b.c + b.b * a.c) / (a.a * b.b + b.a * a.b);
+	}
+	static Line perpendicular(Line a, double x,double y){
+		Line c = new Line();
+		c.a = -a.b;
+		c.b = a.a;
+		c.c = -c.a*x - c.b*y;
+		return c;
+	}
+	static Line lineFromPoints(double x,double y, double x1, double y1){
+		return new Line(y-y1, x - x1, x,y);
+	}
+	static boolean parrallel(Line x, Line y){
+		return Math.abs(x.a / x.b - y.a / y.b) < 1E-5;
+	}
+	public String toString(){
+		return a + "x + " + b + "y + " + c;
+	}
+}

@@ -1,0 +1,8 @@
+public class Modulus {
+    
+    public static void main(String[] p) {
+        int i = -1;
+        System.out.println(i % 3);
+        
+    }
+}

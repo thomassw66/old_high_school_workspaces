@@ -1,0 +1,28 @@
+
+public class TheSnail {
+
+	public static void main(String[] args) {
+		int height = 6;
+		float up = 3;
+		int d = 1; 
+		float f = (10/100f) * up;
+		float pos = 0;
+		int days = 1;
+		while(true){
+			if(pos > height){
+				System.out.printf("succeeded on day %d\n",days);
+				break;
+			}
+			if(pos < 0){
+				System.out.printf("failure on day %d\n",days);
+				break;
+			}
+			
+			pos += up;
+			up = Math.max(up - f, 0);
+			pos -= d;
+			System.out.println(pos);
+			days++;
+		}
+	}
+}

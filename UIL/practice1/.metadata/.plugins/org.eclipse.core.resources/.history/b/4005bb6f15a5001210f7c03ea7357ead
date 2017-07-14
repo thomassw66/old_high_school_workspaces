@@ -1,0 +1,51 @@
+import java.util.Arrays;
+
+
+public class A {
+
+	public static void main(String[] args) {
+		boolean [][] test = {{true,false,false},{true,true, false},{true,false,false}};
+		boolean [][] test2 = {{false,false,false},{false,false, false},{false,false,false}};
+		//System.out.println(isBlank(click(test,3)));
+		System.out.println(function(test,0,0));
+	}
+	public static int function(boolean [][] a, int depth, int clicksSoFar){
+		if(isBlank(a))return clicksSoFar;
+		if(depth > 8) return -1;
+		System.out.println(depth + " " + clicksSoFar);
+		if(depth < 4)
+		System.out.println(Arrays.deepToString(a));
+		int withClick = function(click(a,depth),depth+1,clicksSoFar+1);
+		int noClick = function(a,depth+1,clicksSoFar);
+		System.out.println(depth + " " + noClick + " "+ withClick);
+		if(noClick == -1)
+			return withClick;
+		return noClick;
+	}
+	static boolean isBlank(boolean [][] a){
+		boolean boo = false;
+		for(boolean [] b : a)
+			for(boolean c : b)
+				boo = boo || c;
+		return !boo;
+	}
+		
+	public static boolean check(int x, int y){
+		return x >= 0 && x < 3 && y >= 0 && y < 3;
+	}
+	public static void change(boolean [][] a , int x, int y){
+		if(check(x,y))
+			a[x][y] = !a[x][y];
+	}
+	public static boolean [][] click(boolean [][] a, int pos){
+		boolean [][] result = a.clone();
+		int y = pos % 3;
+		int x = pos / 3;
+		change(result,x,y);
+		change(result,x+1,y);
+		change(result,x-1,y);
+		change(result,x,y+1);
+		change(result,x,y-1);
+		return result;
+	}
+}

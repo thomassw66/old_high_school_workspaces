@@ -1,0 +1,133 @@
+import java.math.BigInteger;
+import java.util.Arrays;
+//import java.util.ArrayList;
+//import java.util.List;
+import java.util.Scanner;
+
+public class Factivisors {
+	static int [] f(int a){
+		int [] f = new int [a+1];
+		for(int i = 0; i <= a; i++){
+			f[i] = i;
+		}
+		return f;
+	}
+	public static void main(String[] args) {
+		Scanner in = new Scanner (System.in);
+		while(in.hasNext()){
+			int factorial = in.nextInt();
+			int b = in.nextInt();
+			in.nextLine();
+			System.out.println(divides(b,factorial));
+			
+		}
+	}
+	static boolean divides(int a, int fact){
+		int [] factorial = f(fact);
+		System.out.println(Arrays.toString(factorial));
+		
+		int d = 2;
+		while(a > 1){
+			while(a % d == 0){
+				System.out.println(d);
+				System.out.println(Arrays.toString(factorial));
+				
+				a /= d;
+				boolean stillAlive = helper(factorial,d);
+				if(!stillAlive)return false;
+			}
+			d++;
+		}
+		return true;
+	}
+	static boolean helper(int [] a, int d){
+		for(int i = 1; i < a.length; i++){
+			if(a[i] % d == 0){
+				System.out.println(a[i]);
+				a[i] = a[i] / d;
+				System.out.println(a[i]);
+				System.out.println(Arrays.toString(a));
+				return true;
+			}
+		}
+		return false;
+	}
+}/*
+class PrimeFactorization{
+	public List<Integer> primes;
+	public List<Integer> powers;
+	
+	private PrimeFactorization(){
+		primes = new ArrayList<Integer>();
+		powers = new ArrayList<Integer>();
+	}
+	
+	public PrimeFactorization(int n){
+		this();
+		int d = 2;
+		while(n > 1){
+			if(n % d == 0){
+				int t = 1;
+				n /= d;
+				primes.add(d);
+				while(n % d == 0){
+					t++;
+					n /= d;
+				}
+				powers.add(t);
+			}
+			d++;
+		}
+	}
+	static PrimeFactorization factorFromFactorial(int fact){
+		PrimeFactorization p = new PrimeFactorization();
+		
+		for(int i = 2; i <= fact; i++){
+			int n = i;
+			int d = 2;
+			while(n > 1){
+
+				if(n % d == 0){
+
+					int t = 1;
+					n /= d;
+					while(n % d == 0){
+						t++;
+						n /= d;
+					}
+					
+					int ind = p.primes.indexOf(d);
+
+					if(ind == -1)
+					{
+						p.primes.add(d);
+						p.powers.add(t);
+					}
+					else {
+						p.powers.set(ind,p.powers.get(ind) + t);
+					}
+				}
+				d++;
+			}
+		}
+		return p;
+	}
+	//a test to see if this is divisible by s; this % s == 0 
+	boolean divides(PrimeFactorization s){
+		boolean ok = true;
+		for(int i = 0; i < primes.size(); i++){
+			int pri = primes.get(i);
+			int pow = powers.get(i);
+			
+			int ind = s.primes.indexOf(pri);
+			int p2;
+			if(ind == -1)
+				p2 = 0;
+			else
+				p2 = s.powers.get(ind);
+			
+			if(pow > p2)return false;
+		}
+		return true;
+	}
+}*/

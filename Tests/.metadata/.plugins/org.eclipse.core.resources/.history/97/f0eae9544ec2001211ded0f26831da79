@@ -1,0 +1,6 @@
+public class Underscore {
+    public static void main(String[] args) {
+        int i = 0\u003b
+        System.out.print(i)\u003b
+    }
+}

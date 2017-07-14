@@ -1,0 +1,24 @@
+
+public class EuclidProblem {
+
+	public static void main(String [] args){
+		gcd(21,35);
+		System.out.println(x + " " + y);
+	}
+	static long x,y;
+	static long gcd(long p,long q){
+		
+		if(q == 0){
+			x = 1;
+			y = 0;
+			return p;
+		}
+		
+		long g = gcd(q, p % q);
+		
+		long t = x;
+		x = y;
+		y = (t - p/q*y);
+		return g;
+	}
+}

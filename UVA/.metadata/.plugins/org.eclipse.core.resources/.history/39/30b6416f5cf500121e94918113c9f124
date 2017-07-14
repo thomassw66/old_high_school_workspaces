@@ -1,0 +1,31 @@
+import java.util.Scanner;
+
+
+public class SolveIt {
+	static int p, q, r, s, t, u; 
+	public static void main(String []args){
+		Scanner in = new Scanner (System.in);
+		while(in.hasNextLine()){
+			p = in.nextInt();
+			q = in.nextInt();
+			r = in.nextInt();
+			s = in.nextInt();
+			t = in.nextInt();
+			u = in.nextInt();
+			double x = solver();
+			if(x == -1){
+				System.out.println("No solution");
+			}else {
+				System.out.printf("%.4f\n",x);
+			}
+		}
+	}
+	static double solver(){
+		double lo = 0;
+		double hi = 1;
+		return -1;
+	}
+	static double f(double x){
+		return p*Math.exp(-x)+ q*Math.sin(x) + r*Math.cos(x) + s*Math.tan(x) + t*x*x + u;
+	}
+}

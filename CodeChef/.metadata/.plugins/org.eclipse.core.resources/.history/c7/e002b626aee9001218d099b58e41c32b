@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+
+public class COUPON {
+
+	public static void main(String [] args) throws IOException{
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		
+		int T = nextInt(in);
+		for(int t = 0; t < T; t++){
+			int N = nextInt(in);
+			int M = nextInt(in);
+			long [][] price = new long [M][N]; // M stores N products
+			long [][] disc  = new long [M][N];
+			long [][] d = new long [M][N];
+			for(int i = 0; i < N; i ++){
+				for(int j = 0; j < M; j++){
+					price[j][i] = nextInt(in);
+				}
+			}
+			for(int i = 0; i < N; i++){
+				for(int j = 0; j < M; j ++){
+					disc[j][i] = nextInt(in);
+				}
+			}
+			long MIN = Integer.MAX_VALUE;
+			for (int i = 0; i < M; i++){
+				d[i][0] = price[i][0];
+				MIN = Math.min(d[i][0], MIN);
+			}
+			for(int prod = 1; prod < N; prod++){
+				long b = Integer.MAX_VALUE;
+				for(int store = 0; store < M; store ++){
+					long tmp = (price[store][prod] - disc[store][prod-1]);
+					if (tmp < 0) tmp = 0;
+					
+					long p = Math.min(MIN + price[store][prod], price[store][prod-1] + tmp);
+					d[store][prod] = p;
+					if(p < b) b = p;
+ 				}
+				MIN = b;
+			}
+			System.out.println(MIN);
+		}
+	}
+	static int nextInt(BufferedReader in) throws IOException{
+		char c = (char)in.read();
+		while(!Character.isDigit(c))
+			c = (char) in.read();
+		int n = c - '0';
+		while(Character.isDigit((c = (char) in.read()))){
+			n *= 10;
+			n += c - '0';
+		}
+		return n;
+	}
+}

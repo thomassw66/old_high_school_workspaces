@@ -1,0 +1,36 @@
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StateUIL {
+    static public void main(String[] args) throws Exception {
+        Twenty.main(args);
+    }
+}
+
+class Twenty {
+    public List<Integer> L;
+    static final int     SIZE = 5; // 1
+                                   
+    static public void main(String[] args) throws IOException { // 3
+        File f = new File("Output.txt");
+        if (f.exists()) {
+            PrintStream p;
+            p = new PrintStream(f); // 4
+            Twenty t = new Twenty();
+            for (int i = 0; i < SIZE; ++i) {
+                p.print(L.get(i));
+            }
+            p.close();
+        }
+    }
+    
+    public Twenty() {
+        L = new ArrayList<Integer>();
+        for (int i = 1; i <= SIZE; ++i) {
+            L.add(SIZE - i); // 2
+        }
+    }
+}

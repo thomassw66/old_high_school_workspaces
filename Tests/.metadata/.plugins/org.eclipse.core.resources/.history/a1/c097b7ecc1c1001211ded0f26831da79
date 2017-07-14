@@ -1,0 +1,9 @@
+public class ShortCircuit {
+    
+    public static void main(String[] ar) {
+        int test = -2;
+        if (1 != 1 && (++test) == 10) {
+        }
+        System.out.println(test);
+    }
+}
