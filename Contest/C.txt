@@ -1,0 +1,20 @@
+5
+120 12:00 60
+1
+Alert at 12:30, 10m north of Tada, 10 min delay
+120 12:00 60
+2
+Alert at 12:30, 40m north of Tada, 10 min delay
+Alert at 01:00, 90m north of Tada, 15 min delay
+200 01:00 30
+1
+Alert at 01:30, 10m north of Tada, 30 min delay
+200 01:00 60
+5
+Alert at 01:30, 10m north of Tada, 10 min delay
+Alert at 01:45, 20m north of Tada, 20 min delay
+Alert at 01:50, 100m north of Tada, 30 min delay
+Alert at 02:00, 120m north of Tada, 30 min delay
+Alert at 02:30, 100m north of Tada, 20 min delay
+120 12:00 60
+0
